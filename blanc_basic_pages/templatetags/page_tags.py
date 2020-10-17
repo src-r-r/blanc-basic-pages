@@ -13,7 +13,7 @@ def show_nav(pages):
     return pages
 
 
-@register.assignment_tag
+@register.simple_tag
 def get_active_page(current_page):
     try:
         return Page.objects.get(url=resolve_url(current_page))
@@ -23,7 +23,7 @@ def get_active_page(current_page):
     return None
 
 
-@register.assignment_tag
+@register.simple_tag
 def get_root_pages(current_page=None):
     if current_page and not isinstance(current_page, Page):
         try:
@@ -45,7 +45,7 @@ def get_root_pages(current_page=None):
     return page_list
 
 
-@register.assignment_tag
+@register.simple_tag
 def get_pages_at_level(current_page, level=1):
     if current_page and not isinstance(current_page, Page):
         try:
@@ -71,7 +71,7 @@ def get_pages_at_level(current_page, level=1):
     return page_list
 
 
-@register.assignment_tag
+@register.simple_tag
 def tree_from_root(current_page=None):
     tree = None
 
@@ -88,7 +88,7 @@ def tree_from_root(current_page=None):
     return tree
 
 
-@register.assignment_tag
+@register.simple_tag
 def get_page_ancestor_ids(current_page=None):
     ancestors = []
 

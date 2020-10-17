@@ -2,10 +2,11 @@ from __future__ import unicode_literals
 
 from blanc_basic_assets.fields import AssetForeignKey
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import get_script_prefix
+from django.urls import get_script_prefix
 from django.core.validators import RegexValidator
 from django.db import models
-from django.utils.encoding import iri_to_uri, python_2_unicode_compatible
+from django.utils.encoding import iri_to_uri
+from six import python_2_unicode_compatible
 
 from mptt.managers import TreeManager
 from mptt.models import MPTTModel, TreeForeignKey
@@ -32,7 +33,7 @@ class Page(MPTTModel):
         help_text="Example: '/about/contact/'. Make sure to have leading and trailing slashes.",
         validators=[url_validator, slash_validator])
     title = models.CharField(max_length=200)
-    parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='children', on_delete=models.CASCADE)
     show_in_navigation = models.BooleanField(default=True, db_index=True)
     hero_image = AssetForeignKey('assets.Image', blank=True, null=True, on_delete=models.SET_NULL)
     content = models.TextField(blank=True)
